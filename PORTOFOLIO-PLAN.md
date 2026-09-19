@@ -158,7 +158,7 @@ git branch -M main
 | 6 | `Navbar.astro` | `step 6: create navbar component` | ✅ |
 | 7 | `Hero.astro` | `step 7: create hero section` | ✅ |
 | 8 | `About.astro` (+ `SectionTitle.astro`) | `step 8: create about section` | ✅ |
-| 9 | `Skills.astro` | `step 9: create skills section` | ⏳ |
+| 9 | `Skills.astro` | `step 9: create skills section` | ✅ |
 | 10 | `Projects.astro` | `step 10: create projects section` | ⏳ |
 | 11 | `Experience.astro` | `step 11: create experience section` | ⏳ |
 | 12 | `Contact.astro` | `step 12: create contact section` | ⏳ |

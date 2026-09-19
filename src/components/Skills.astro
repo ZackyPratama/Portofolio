@@ -1,0 +1,55 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+const skills = [
+  { name: 'HTML & CSS', short: 'CSS', level: 95 },
+  { name: 'JavaScript', short: 'JS', level: 90 },
+  { name: 'TypeScript', short: 'TS', level: 85 },
+  { name: 'React', short: 'Re', level: 88 },
+  { name: 'Astro', short: 'As', level: 82 },
+  { name: 'Node.js', short: 'Nd', level: 80 },
+  { name: 'Tailwind CSS', short: 'TW', level: 92 },
+  { name: 'Git', short: 'Git', level: 85 },
+  { name: 'Figma', short: 'Fg', level: 75 },
+  { name: 'MySQL', short: 'DB', level: 78 },
+];
+---
+
+<section id="skills" class="relative px-6 py-24 sm:py-28">
+  <div class="mx-auto max-w-6xl">
+    <SectionTitle
+      eyebrow="Keahlian"
+      title="Keahlian & Teknologi"
+      description="Teknologi dan alat yang saya gunakan sehari-hari."
+    />
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        skills.map((skill) => (
+          <div class="reveal glass-card rounded-card p-5 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/10">
+            <div class="flex items-center gap-3">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-accent-alt font-heading text-sm font-bold text-white shadow-md shadow-accent/30">
+                {skill.short}
+              </span>
+              <div class="min-w-0">
+                <p class="font-heading text-sm font-semibold text-slate-900 dark:text-white">
+                  {skill.name}
+                </p>
+                <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                  {skill.level}%
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
+              <div
+                class="h-full rounded-full bg-gradient-to-r from-accent to-accent-alt"
+                style={`width: ${skill.level}%`}
+              />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
