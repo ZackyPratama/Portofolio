@@ -166,4 +166,4 @@ git branch -M main
 | 14 | `SectionTitle.astro` (dibuat di step 8, dipakai 5 section) | _(tanpa commit - tidak ada perubahan)_ | ✅ |
 | 15 | Compose `index.astro` | `step 15: compose all sections in index` | ✅ |
 | 16 | Cleanup `Welcome.astro` + aset default | `step 16: cleanup unused default components` | ✅ |
-| 17 | Testing `npm run dev` | `step 17: initial testing and verification` | ⏳ |
+| 17 | Testing `npm run dev` | `step 17: initial testing and verification` | ✅ |
