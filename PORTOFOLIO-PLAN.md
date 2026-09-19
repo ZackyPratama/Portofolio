@@ -1,48 +1,44 @@
 # Rencana Website Portofolio
 
-## Kondisi Saat Ini
+## Stack Final
 
-| Item | Status |
-|------|--------|
-| Template | Astro basics (v7.2.10) |
-| Node.js | v20.17.0 (**tidak kompatibel** - Astro 7 butuh v22+) |
-| Tailwind | Belum terpasang |
-| Components | Hanya `Welcome.astro` (default) |
-| Assets | Kosong (belum ada gambar) |
+| Komponen | Versi |
+|----------|-------|
+| Node.js | v24.21.0 (terpasang, LTS) |
+| Astro | 7.x (latest) |
+| Tailwind | 4.x (via `@tailwindcss/vite`) |
+| GitHub | repo manual |
+
+**Catatan**: Astro 7 + Tailwind v4 memakai konfigurasi berbasis CSS (`@theme`, `@custom-variant`), bukan `tailwind.config.mjs`.
 
 ---
 
-## 1. Perbaikan Kompatibilitas
+## 1. Setup Awal
 
-**Masalah**: Astro 7.x membutuhkan Node.js >= 22.12.0, tapi Anda punya v20.17.0.
-
-**Solusi**: Downgrade ke **Astro 4.x** yang mendukung Node 20.
-
-```
-package.json:
-- astro: "^7.2.10" → "^4.16.0"
-- Tambah @astrojs/tailwind & tailwindcss
-- Hapus engines constraint
+```bash
+npx astro add tailwind   # otomatis: vite plugin + src/styles/global.css
 ```
 
+- `astro.config.mjs` → tambah `@tailwindcss/vite` plugin
+- `src/styles/global.css` → `@import "tailwindcss";`
+
+### Konfigurasi Theme & Dark Mode (di `global.css`)
+
+```css
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-accent: #6C63FF;
+  --color-accent-alt: #3B82F6;
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+```
+
 ---
 
-## 2. Instalasi & Konfigurasi
-
-| Package | Fungsi |
-|---------|--------|
-| `astro@^4.16.0` | Framework SSG |
-| `@astrojs/tailwind@^5.1.0` | Integrasi Tailwind ke Astro |
-| `tailwindcss@^3.4.0` | Utility CSS framework |
-
-**Konfigurasi yang perlu dibuat/diubah:**
-- `astro.config.mjs` - Tambah integrasi Tailwind
-- `tailwind.config.mjs` - Konfigurasi dark mode + custom theme
-- `src/styles/global.css` - Base styles + custom CSS
-
----
-
-## 3. Struktur Component
+## 2. Struktur Component
 
 ```
 src/
@@ -62,46 +58,44 @@ src/
 ├── pages/
 │   └── index.astro               # Halaman utama (single page)
 └── styles/
-    └── global.css                # Global styles
+    └── global.css                # Global styles + theme + animations
 ```
 
 ---
 
-## 4. Desain Kreatif & Unik
+## 3. Desain Kreatif & Unik
 
 ### Konsep Visual
 
 | Elemen | Implementasi |
 |--------|-------------|
-| **Typography** | Font modern (Inter untuk body, Space Grotesk untuk heading) |
-| **Warna** | Palet ungu-biru gradient (#6C63FF → #3B82F6) sebagai aksen |
-| **Background** | Dark: slate-900, Light: white dengan subtle gradient |
-| **Cards** | Glass morphism effect (backdrop-blur + semi-transparent) |
-| **Borders** | Gradient borders menggunakan `border-image` |
+| **Typography** | Inter (body) + Space Grotesk (heading) |
+| **Warna** | Gradient ungu-biru (#6C63FF → #3B82F6) |
+| **Background** | Dark: slate-900, Light: white + subtle gradient |
+| **Cards** | Glass morphism (backdrop-blur + semi-transparent) |
+| **Borders** | Gradient borders |
 | **Shadows** | Glow effects berwarna aksen |
 
 ### Animasi & Interaksi
 
 | Efek | Lokasi | Implementasi |
 |------|--------|-------------|
-| **Typing effect** | Hero | CSS `@keyframes` dengan `steps()` |
-| **Fade-in-up** | Semua section | CSS `@keyframes` + `IntersectionObserver` |
-| **Hover lift** | Kartu skills & projects | CSS `transform: translateY()` + `transition` |
-| **Glow pulse** | CTA button | CSS `box-shadow` animation |
-| **Smooth scroll** | Navigasi | CSS `scroll-behavior: smooth` |
-| **Gradient shift** | Background accents | CSS `background-position` animation |
+| **Typing effect** | Hero | CSS `@keyframes` + `steps()` |
+| **Fade-in-up** | Semua section | `@keyframes` + `IntersectionObserver` |
+| **Hover lift** | Kartu skills & projects | `transform` + `transition` |
+| **Glow pulse** | CTA button | `box-shadow` animation |
+| **Smooth scroll** | Navigasi | `scroll-behavior: smooth` |
+| **Gradient shift** | Background accents | `background-position` animation |
 
 ---
 
-## 5. Dark/Light Mode
-
-### Implementasi
+## 4. Dark/Light Mode
 
 - Toggle button di navbar (ikon matahari/bulan)
 - Persist preference di `localStorage`
 - Default mengikuti `prefers-color-scheme` system
-- Transisi halus saat switching (`transition: background-color 0.3s`)
-- Tailwind `darkMode: 'class'` strategy
+- Transisi halus saat switching
+- Tailwind v4: `@custom-variant dark (&:where(.dark, .dark *))`
 
 ### Mekanisme
 
@@ -113,74 +107,63 @@ src/
 
 ---
 
-## 6. Konten Placeholder
-
-Setiap section akan diisi dengan placeholder yang mudah diganti:
+## 5. Konten Placeholder
 
 | Section | Placeholder Content |
 |---------|-------------------|
 | **Hero** | "[Nama Anda]" + "Full Stack Developer" + typing animation |
-| **About** | Avatar SVG + Lorem ipsum singkat + 3 fun facts |
-| **Skills** | 8-10 skill cards (HTML, CSS, JS, React, Node.js, dll) |
-| **Projects** | 4-6 kartu proyek dengan gambar placeholder |
+| **About** | Avatar SVG + bio singkat + 3 fun facts |
+| **Skills** | 8-10 skill cards |
+| **Projects** | 4-6 kartu proyek |
 | **Experience** | 2-3 timeline entries |
-| **Contact** | Form (nama, email, pesan) + 4 sosial media icons |
+| **Contact** | Form (nama, email, pesan) + sosial media |
 
 ---
 
-## 7. Responsive Design
+## 6. Responsive Design
 
 | Breakpoint | Layout |
 |------------|--------|
 | Mobile (< 640px) | Single column, hamburger menu |
 | Tablet (640-1024px) | 2 column grid |
-| Desktop (> 1024px) | Full layout, sidebar nav (opsional) |
+| Desktop (> 1024px) | Full layout |
 
 ---
 
-## 8. File yang Perlu Dibuat/Diubah
+## 7. Workflow Git/GitHub
 
-| File | Aksi |
-|------|------|
-| `package.json` | **Ubah** - downgrade Astro, tambah Tailwind |
-| `astro.config.mjs` | **Ubah** - tambah integrasi Tailwind |
-| `tailwind.config.mjs` | **Buat** - konfigurasi theme & dark mode |
-| `src/styles/global.css` | **Buat** - base styles, animations, custom CSS |
-| `src/layouts/Layout.astro` | **Ubah** - tambah fonts, meta, global CSS import |
-| `src/components/Navbar.astro` | **Buat** |
-| `src/components/Hero.astro` | **Buat** |
-| `src/components/About.astro` | **Buat** |
-| `src/components/Skills.astro` | **Buat** |
-| `src/components/Projects.astro` | **Buat** |
-| `src/components/Experience.astro` | **Buat** |
-| `src/components/Contact.astro` | **Buat** |
-| `src/components/ThemeToggle.astro` | **Buat** |
-| `src/components/SectionTitle.astro` | **Buat** |
-| `src/components/Footer.astro` | **Buat** |
-| `src/pages/index.astro` | **Ubah** - import semua sections |
-| `src/components/Welcome.astro` | **Hapus** - tidak dipakai |
-| `public/images/` | **Buat** - untuk gambar proyek/avatar |
+### Aturan Commit
+- **Commit per step**: setelah satu step selesai, langsung commit
+- **Format**: `step <nomor>: <deskripsi singkat>`
+- **Push**: dilakukan atas permintaan user (remote diurus manual)
+
+### Setup
+```bash
+git init
+git branch -M main
+```
 
 ---
 
-## 9. Urutan Pengerjaan
+## 8. Urutan Pengerjaan + Commit
 
-```
-Step 1:  Fix package.json + install dependencies
-Step 2:  Konfigurasi Astro + Tailwind
-Step 3:  Buat global.css + animations
-Step 4:  Buat Layout.astro (updated)
-Step 5:  Buat ThemeToggle.astro
-Step 6:  Buat Navbar.astro
-Step 7:  Buat Hero.astro
-Step 8:  Buat About.astro
-Step 9:  Buat Skills.astro
-Step 10: Buat Projects.astro
-Step 11: Buat Experience.astro
-Step 12: Buat Contact.astro
-Step 13: Buat Footer.astro
-Step 14: Buat SectionTitle.astro (reusable)
-Step 15: Update index.astro (compose all)
-Step 16: Cleanup (hapus Welcome.astro)
-Step 17: Testing (npm run dev)
-```
+| Step | Pengerjaan | Commit Message | Status |
+|------|-----------|----------------|--------|
+| 0 | Init Git repository | `step 0: init git repository` | ✅ |
+| 1 | Setup Astro 7 + Tailwind v4 | `step 1: setup astro 7 with tailwind v4` | ⏳ |
+| 2 | Konfigurasi theme & dark mode | `step 2: configure theme and dark mode` | ⏳ |
+| 3 | Global styles + animations | `step 3: add global styles and animations` | ⏳ |
+| 4 | Update `Layout.astro` | `step 4: update layout with fonts and meta` | ⏳ |
+| 5 | `ThemeToggle.astro` | `step 5: create theme toggle component` | ⏳ |
+| 6 | `Navbar.astro` | `step 6: create navbar component` | ⏳ |
+| 7 | `Hero.astro` | `step 7: create hero section` | ⏳ |
+| 8 | `About.astro` | `step 8: create about section` | ⏳ |
+| 9 | `Skills.astro` | `step 9: create skills section` | ⏳ |
+| 10 | `Projects.astro` | `step 10: create projects section` | ⏳ |
+| 11 | `Experience.astro` | `step 11: create experience section` | ⏳ |
+| 12 | `Contact.astro` | `step 12: create contact section` | ⏳ |
+| 13 | `Footer.astro` | `step 13: create footer component` | ⏳ |
+| 14 | `SectionTitle.astro` | `step 14: create reusable section title` | ⏳ |
+| 15 | Compose `index.astro` | `step 15: compose all sections in index` | ⏳ |
+| 16 | Cleanup `Welcome.astro` | `step 16: cleanup unused default components` | ⏳ |
+| 17 | Testing `npm run dev` | `step 17: initial testing and verification` | ⏳ |
