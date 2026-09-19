@@ -1,0 +1,99 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+const stats = [
+  { value: '3+', label: 'Tahun Pengalaman' },
+  { value: '20+', label: 'Proyek Selesai' },
+  { value: '10+', label: 'Klien Puas' },
+];
+
+const facts = [
+  {
+    title: 'Bersih & Rapi',
+    description: 'Kode terstruktur, konsisten, dan mudah dirawat.',
+  },
+  {
+    title: 'Fokus Performa',
+    description: 'Website cepat dan nyaman di semua perangkat.',
+  },
+  {
+    title: 'Detail',
+    description: 'Memperhatikan hal kecil yang membuat berbeda.',
+  },
+];
+---
+
+<section id="about" class="relative px-6 py-24 sm:py-28">
+  <div class="mx-auto max-w-6xl">
+    <SectionTitle
+      eyebrow="Tentang"
+      title="Tentang Saya"
+      description="Sedikit cerita tentang siapa saya dan apa yang saya kerjakan."
+    />
+
+    <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,340px)_1fr]">
+      <div class="reveal mx-auto w-full max-w-xs">
+        <div
+          class="relative aspect-square rounded-[2rem] bg-gradient-to-br from-accent to-accent-alt p-1 shadow-xl shadow-accent/20"
+        >
+          <div
+            class="flex h-full w-full items-center justify-center overflow-hidden rounded-[1.8rem] bg-white dark:bg-slate-900"
+          >
+            <svg
+              class="h-32 w-32 text-accent/50"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.69-8 6v2h16v-2c0-3.31-3.58-6-8-6Z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <p class="text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
+          Ini adalah paragraf bio placeholder. Saya seorang pengembang yang
+          senang membangun produk digital dari konsep hingga rilis, dengan
+          perhatian pada kualitas dan pengalaman pengguna.
+        </p>
+        <p class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
+          Sehari-hari saya bekerja dengan teknologi web modern. Ganti teks ini
+          dengan cerita Anda sendiri.
+        </p>
+
+        <div class="mt-8 grid grid-cols-3 gap-4">
+          {
+            stats.map((stat) => (
+              <div class="glass-card rounded-card p-4 text-center">
+                <p class="font-heading text-2xl font-bold text-accent">
+                  {stat.value}
+                </p>
+                <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
+                  {stat.label}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 grid gap-4 sm:grid-cols-3">
+      {
+        facts.map((fact) => (
+          <div class="reveal glass-card rounded-card p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/10">
+            <h3 class="font-heading text-lg font-semibold text-slate-900 dark:text-white">
+              {fact.title}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              {fact.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
