@@ -155,7 +155,7 @@ git branch -M main
 | 3 | Global styles + animations | `step 3: add global styles and animations` | ✅ |
 | 4 | Update `Layout.astro` | `step 4: update layout with fonts and meta` | ✅ |
 | 5 | `ThemeToggle.astro` | `step 5: create theme toggle component` | ✅ |
-| 6 | `Navbar.astro` | `step 6: create navbar component` | ⏳ |
+| 6 | `Navbar.astro` | `step 6: create navbar component` | ✅ |
 | 7 | `Hero.astro` | `step 7: create hero section` | ⏳ |
 | 8 | `About.astro` | `step 8: create about section` | ⏳ |
 | 9 | `Skills.astro` | `step 9: create skills section` | ⏳ |
