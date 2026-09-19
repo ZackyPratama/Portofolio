@@ -1,0 +1,82 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+const experiences = [
+  {
+    period: '2023 — Sekarang',
+    role: 'Full Stack Developer',
+    company: 'Nama Perusahaan',
+    description:
+      'Deskripsi pekerjaan placeholder. Menjelaskan tanggung jawab, kontribusi, dan pencapaian utama.',
+    tags: ['Astro', 'React', 'Node.js'],
+  },
+  {
+    period: '2021 — 2023',
+    role: 'Frontend Developer',
+    company: 'Nama Perusahaan',
+    description:
+      'Deskripsi pekerjaan placeholder. Menjelaskan tanggung jawab, kontribusi, dan pencapaian utama.',
+    tags: ['Vue', 'Tailwind', 'TypeScript'],
+  },
+  {
+    period: '2020 — 2021',
+    role: 'Web Developer Intern',
+    company: 'Nama Perusahaan',
+    description:
+      'Deskripsi pekerjaan placeholder. Menjelaskan tanggung jawab, kontribusi, dan pencapaian utama.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+  },
+];
+---
+
+<section id="experience" class="relative px-6 py-24 sm:py-28">
+  <div class="mx-auto max-w-4xl">
+    <SectionTitle
+      eyebrow="Pengalaman"
+      title="Pengalaman Kerja"
+      description="Perjalanan karier dan pengalaman profesional saya."
+    />
+
+    <ol
+      class="relative space-y-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-slate-200 dark:before:bg-white/10"
+    >
+      {
+        experiences.map((item) => (
+          <li class="reveal relative pl-10">
+            <span
+              class="absolute left-2 top-2 h-4 w-4 -translate-x-1/2 rounded-full bg-accent ring-4 ring-white dark:ring-slate-900"
+              aria-hidden="true"
+            />
+
+            <div class="glass-card rounded-card p-5 sm:p-6">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-heading text-lg font-semibold text-slate-900 dark:text-white">
+                  {item.role}
+                </h3>
+                <span class="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+                  {item.period}
+                </span>
+              </div>
+
+              <p class="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+                {item.company}
+              </p>
+
+              <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                {item.description}
+              </p>
+
+              <div class="mt-4 flex flex-wrap gap-2">
+                {item.tags.map((tag) => (
+                  <span class="rounded-full border border-slate-200 bg-white/60 px-3 py-1 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
