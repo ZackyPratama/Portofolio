@@ -159,7 +159,7 @@ git branch -M main
 | 7 | `Hero.astro` | `step 7: create hero section` | ✅ |
 | 8 | `About.astro` (+ `SectionTitle.astro`) | `step 8: create about section` | ✅ |
 | 9 | `Skills.astro` | `step 9: create skills section` | ✅ |
-| 10 | `Projects.astro` | `step 10: create projects section` | ⏳ |
+| 10 | `Projects.astro` | `step 10: create projects section` | ✅ |
 | 11 | `Experience.astro` | `step 11: create experience section` | ⏳ |
 | 12 | `Contact.astro` | `step 12: create contact section` | ⏳ |
 | 13 | `Footer.astro` | `step 13: create footer component` | ⏳ |
