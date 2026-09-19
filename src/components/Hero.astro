@@ -1,0 +1,107 @@
+---
+const role = 'Full Stack Developer';
+---
+
+<section
+  id="hero"
+  class="relative flex min-h-screen items-center overflow-hidden px-6 pt-28 pb-16"
+>
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div
+      class="animate-float absolute -top-24 left-[15%] h-72 w-72 rounded-full bg-accent/25 blur-3xl"
+    >
+    </div>
+    <div
+      class="animate-float absolute bottom-0 right-[12%] h-80 w-80 rounded-full bg-accent-alt/25 blur-3xl"
+      style="animation-delay: -2s"
+    >
+    </div>
+  </div>
+
+  <div class="mx-auto w-full max-w-6xl">
+    <div class="max-w-3xl">
+      <p
+        class="reveal mb-5 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/60 px-4 py-1.5 text-sm font-medium text-slate-600 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+      >
+        Halo, selamat datang
+      </p>
+
+      <h1
+        class="reveal font-heading text-5xl font-bold leading-tight tracking-tight text-slate-900 sm:text-6xl lg:text-7xl dark:text-white"
+      >
+        Nama <span class="gradient-text">Anda</span>
+      </h1>
+
+      <p
+        class="reveal mt-6 font-heading text-2xl font-semibold text-slate-700 sm:text-3xl dark:text-slate-200"
+      >
+        <span class="typing text-accent">{role}</span>
+      </p>
+
+      <p
+        class="reveal mt-6 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400"
+      >
+        Ini adalah deskripsi singkat placeholder. Saya membangun website dan
+        aplikasi yang cepat, rapi, dan nyaman digunakan.
+      </p>
+
+      <div class="reveal mt-10 flex flex-wrap items-center gap-4">
+        <a
+          href="#projects"
+          class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-alt px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/50"
+        >
+          Lihat Proyek
+          <svg
+            class="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg>
+        </a>
+
+        <a
+          href="#contact"
+          class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent dark:border-white/15 dark:text-slate-200 dark:hover:border-accent dark:hover:text-accent"
+        >
+          Hubungi Saya
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .typing {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    border-right: 3px solid var(--color-accent);
+    width: 0;
+    max-width: 100%;
+    animation:
+      hero-typing 2.6s steps(20, end) 0.4s forwards,
+      hero-caret 0.8s step-end infinite;
+  }
+
+  @keyframes hero-typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 20ch;
+    }
+  }
+
+  @keyframes hero-caret {
+    50% {
+      border-color: transparent;
+    }
+  }
+</style>
