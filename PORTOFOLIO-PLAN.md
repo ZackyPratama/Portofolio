@@ -161,7 +161,7 @@ git branch -M main
 | 9 | `Skills.astro` | `step 9: create skills section` | ✅ |
 | 10 | `Projects.astro` | `step 10: create projects section` | ✅ |
 | 11 | `Experience.astro` | `step 11: create experience section` | ✅ |
-| 12 | `Contact.astro` | `step 12: create contact section` | ⏳ |
+| 12 | `Contact.astro` | `step 12: create contact section` | ✅ |
 | 13 | `Footer.astro` | `step 13: create footer component` | ⏳ |
 | 14 | `SectionTitle.astro` (dibuat di step 8) | `step 14: verify reusable section title` | ⏳ |
 | 15 | Compose `index.astro` | `step 15: compose all sections in index` | ⏳ |

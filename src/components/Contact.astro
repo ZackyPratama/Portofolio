@@ -1,0 +1,215 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+const formEndpoint = '#';
+
+const socials = [
+  { name: 'GitHub', href: 'https://github.com/', icon: 'github' },
+  { name: 'LinkedIn', href: 'https://linkedin.com/', icon: 'linkedin' },
+  { name: 'Twitter', href: 'https://twitter.com/', icon: 'twitter' },
+  { name: 'Instagram', href: 'https://instagram.com/', icon: 'instagram' },
+];
+
+const inputClass =
+  'w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-accent focus:ring-2 focus:ring-accent/30 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500';
+---
+
+<section id="contact" class="relative px-6 py-24 sm:py-28">
+  <div class="mx-auto max-w-6xl">
+    <SectionTitle
+      eyebrow="Kontak"
+      title="Mari Terhubung"
+      description="Punya pertanyaan atau ingin bekerja sama? Kirim pesan."
+    />
+
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div class="reveal">
+        <h3 class="font-heading text-xl font-semibold text-slate-900 dark:text-white">
+          Informasi Kontak
+        </h3>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          Saya terbuka untuk peluang kerja, kolaborasi proyek, maupun sekadar
+          berdiskusi.
+        </p>
+
+        <ul class="mt-8 space-y-4">
+          <li class="flex items-center gap-3">
+            <span
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent"
+            >
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 2v.01L12 11l8-4.99V6H4Zm16 2.5-7.5 4.67a1 1 0 0 1-1 0L4 8.5V18h16V8.5Z"
+                ></path>
+              </svg>
+            </span>
+            <div>
+              <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                Email
+              </p>
+              <a
+                href="mailto:email@contoh.com"
+                class="text-sm font-semibold text-slate-900 transition hover:text-accent dark:text-white"
+              >
+                email@contoh.com
+              </a>
+            </div>
+          </li>
+
+          <li class="flex items-center gap-3">
+            <span
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent"
+            >
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+            </span>
+            <div>
+              <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                Lokasi
+              </p>
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">
+                Indonesia
+              </p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="mt-8">
+          <p class="mb-3 text-xs font-medium uppercase tracking-widest text-slate-500 dark:text-slate-400">
+            Sosial Media
+          </p>
+          <div class="flex flex-wrap gap-3">
+            {
+              socials.map((social) => (
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  title={social.name}
+                  class="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white/60 text-slate-600 transition duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+                >
+                  {social.icon === 'github' && (
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z" />
+                    </svg>
+                  )}
+                  {social.icon === 'linkedin' && (
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05C20.4 8.65 21 10.6 21 13.1V21h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V21H9V9Z" />
+                    </svg>
+                  )}
+                  {social.icon === 'twitter' && (
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M17.53 3H21l-7.19 8.21L22 21h-6.56l-4.6-6.02L5.6 21H2l7.66-8.76L2 3h6.68l4.16 5.5L17.53 3Zm-1.16 16h1.8L7.7 4.9H5.78L16.37 19Z" />
+                    </svg>
+                  )}
+                  {social.icon === 'instagram' && (
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2Zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.19-1.7.32-.43.17-.73.36-1.05.68-.32.32-.51.62-.68 1.05-.13.32-.28.8-.32 1.7C3.45 8.5 3.44 8.85 3.44 12s.01 3.5.07 4.74c.04.9.19 1.38.32 1.7.17.43.36.73.68 1.05.32.32.62.51 1.05.68.32.13.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.19 1.7-.32.43-.17.73-.36 1.05-.68.32-.32.51-.62.68-1.05.13-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.19-1.38-.32-1.7a2.8 2.8 0 0 0-.68-1.05 2.8 2.8 0 0 0-1.05-.68c-.32-.13-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4Zm0 3.06A4.94 4.94 0 1 1 12 17a4.94 4.94 0 0 1 0-9.88Zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28Zm5.14-.9a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z" />
+                    </svg>
+                  )}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form
+          action={formEndpoint}
+          method="POST"
+          class="glass-card rounded-card p-6 sm:p-8"
+        >
+          <div class="space-y-4">
+            <div>
+              <label
+                for="name"
+                class="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+              >
+                Nama
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="Nama Anda"
+                class={inputClass}
+              />
+            </div>
+
+            <div>
+              <label
+                for="email"
+                class="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="email@contoh.com"
+                class={inputClass}
+              />
+            </div>
+
+            <div>
+              <label
+                for="message"
+                class="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+              >
+                Pesan
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                required
+                placeholder="Tulis pesan Anda..."
+                class={inputClass}></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-alt px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/50"
+            >
+              Kirim Pesan
+              <svg
+                class="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m22 2-7 20-4-9-9-4 20-7Z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
