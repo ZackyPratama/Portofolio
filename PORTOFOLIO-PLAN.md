@@ -163,7 +163,7 @@ git branch -M main
 | 11 | `Experience.astro` | `step 11: create experience section` | ✅ |
 | 12 | `Contact.astro` | `step 12: create contact section` | ✅ |
 | 13 | `Footer.astro` | `step 13: create footer component` | ✅ |
-| 14 | `SectionTitle.astro` (dibuat di step 8) | `step 14: verify reusable section title` | ⏳ |
-| 15 | Compose `index.astro` | `step 15: compose all sections in index` | ⏳ |
+| 14 | `SectionTitle.astro` (dibuat di step 8, dipakai 5 section) | _(tanpa commit - tidak ada perubahan)_ | ✅ |
+| 15 | Compose `index.astro` | `step 15: compose all sections in index` | ✅ |
 | 16 | Cleanup `Welcome.astro` | `step 16: cleanup unused default components` | ⏳ |
 | 17 | Testing `npm run dev` | `step 17: initial testing and verification` | ⏳ |
