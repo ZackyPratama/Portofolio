@@ -48,10 +48,17 @@ const {
     </script>
   </head>
   <body>
+    <a
+      href="#main-content"
+      class="sr-only fixed left-4 top-4 z-[100] bg-[#800020] px-4 py-3 font-bold text-white focus:not-sr-only"
+    >
+      Lewati ke konten utama
+    </a>
     <slot />
 
     <script is:inline>
       (function () {
+        document.documentElement.classList.add('js-motion');
         var reveal = document.querySelectorAll('.reveal');
         if (!reveal.length) return;
 
