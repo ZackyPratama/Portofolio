@@ -8,13 +8,15 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "test": "node src/lib/sceneLifecycle.test.js",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.10",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "three": "^0.186.1"
   },
   "allowScripts": {
     "esbuild": true

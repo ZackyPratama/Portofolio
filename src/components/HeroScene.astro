@@ -1,0 +1,217 @@
+<div data-hero-scene class="relative min-h-[22rem] overflow-hidden border-[3px] border-black bg-[#f7f4ef] dark:border-[#f7f4ef] dark:bg-black sm:min-h-[30rem]">
+  <div data-hero-fallback class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div class="absolute left-[14%] top-[14%] h-32 w-32 border-[3px] border-black bg-[#800020] shadow-[8px_8px_0_#0a0a0a] dark:border-[#f7f4ef] dark:shadow-[8px_8px_0_#f7f4ef]"></div>
+    <div class="absolute bottom-[16%] right-[14%] h-40 w-40 rotate-[3deg] border-[3px] border-black bg-black dark:border-[#f7f4ef] dark:bg-[#800020]"></div>
+    <div class="absolute bottom-[28%] left-[24%] h-16 w-16 rounded-full border-[3px] border-black bg-white dark:border-[#f7f4ef] dark:bg-[#f7f4ef]"></div>
+  </div>
+  <p aria-hidden="true" class="pointer-events-none absolute bottom-4 left-4 z-10 bg-[#800020] px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] text-white">Objek geometris / 01</p>
+  <button type="button" data-scene-pause hidden aria-pressed="false" class="absolute right-4 top-4 z-10 border-[3px] border-black bg-white px-3 py-2 text-xs font-bold text-black shadow-[4px_4px_0_#0a0a0a] hover:underline disabled:cursor-not-allowed dark:border-[#f7f4ef] dark:bg-black dark:text-white dark:shadow-[4px_4px_0_#f7f4ef]">Jeda animasi</button>
+</div>
+
+<script>
+  import { nextRotation, shouldAnimate } from '../lib/sceneLifecycle.js';
+
+  async function mountScene(container: HTMLElement) {
+    const fallback = container.querySelector<HTMLElement>('[data-hero-fallback]');
+    const pauseButton = container.querySelector<HTMLButtonElement>('[data-scene-pause]');
+    if (!fallback || !pauseButton) return;
+
+    const releases: (() => void)[] = [];
+    let destroyed = false;
+    let suspended = false;
+    let sync = () => {};
+    let resize = () => {};
+
+    function cleanup() {
+      if (destroyed) return;
+      destroyed = true;
+      fallback!.hidden = false;
+      pauseButton!.hidden = true;
+      for (const release of releases.reverse()) release();
+    }
+
+    function onPageHide(event: PageTransitionEvent) {
+      if (!event.persisted) cleanup();
+      else {
+        suspended = true;
+        sync();
+      }
+    }
+
+    function onPageShow() {
+      suspended = false;
+      resize();
+      sync();
+    }
+
+    window.addEventListener('pagehide', onPageHide);
+    window.addEventListener('pageshow', onPageShow);
+    releases.push(() => {
+      window.removeEventListener('pagehide', onPageHide);
+      window.removeEventListener('pageshow', onPageShow);
+    });
+
+    try {
+      const THREE = await import('three');
+      if (destroyed) return;
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      releases.push(() => {
+        renderer.dispose();
+        renderer.forceContextLoss();
+        renderer.domElement.remove();
+      });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      renderer.domElement.setAttribute('aria-hidden', 'true');
+      renderer.domElement.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+      container.prepend(renderer.domElement);
+
+      function onContextLost(event: Event) {
+        event.preventDefault();
+        cleanup();
+      }
+      renderer.domElement.addEventListener('webglcontextlost', onContextLost);
+      releases.push(() => renderer.domElement.removeEventListener('webglcontextlost', onContextLost));
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+      camera.position.set(0, 0, 8);
+      const keyLight = new THREE.DirectionalLight(0xffffff, 3.5);
+      keyLight.position.set(4, 5, 6);
+      const fillLight = new THREE.DirectionalLight(0x800020, 2);
+      fillLight.position.set(-4, -3, 3);
+      scene.add(keyLight, fillLight, new THREE.AmbientLight(0xffffff, 0.7));
+
+      const sculpture = new THREE.Group();
+      const coreGeometry = new THREE.IcosahedronGeometry(1.6, 1);
+      releases.push(() => coreGeometry.dispose());
+      const shardGeometry = new THREE.ConeGeometry(0.75, 3.6, 4);
+      releases.push(() => shardGeometry.dispose());
+      const orbitGeometry = new THREE.TorusGeometry(2.05, 0.12, 10, 4);
+      releases.push(() => orbitGeometry.dispose());
+      const burgundy = new THREE.MeshStandardMaterial({ color: 0x800020, roughness: 0.38, metalness: 0.16 });
+      releases.push(() => burgundy.dispose());
+      const black = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, roughness: 0.5, metalness: 0.08 });
+      releases.push(() => black.dispose());
+      const white = new THREE.MeshStandardMaterial({ color: 0xf7f4ef, roughness: 0.5, metalness: 0.05 });
+      releases.push(() => white.dispose());
+      const core = new THREE.Mesh(coreGeometry, burgundy);
+      const shard = new THREE.Mesh(shardGeometry, black);
+      const orbit = new THREE.Mesh(orbitGeometry, white);
+      shard.position.set(0.45, 0.2, -0.4);
+      shard.rotation.set(0.4, 0.6, 0.2);
+      orbit.rotation.set(1.1, 0.25, 0.5);
+      sculpture.add(core, shard, orbit);
+      scene.add(sculpture);
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const finePointer = window.matchMedia('(pointer: fine)');
+      let frame: number | null = null;
+      let lastTime: number | null = null;
+      let paused = false;
+      let visible = false;
+      let pointerX = 0;
+      let pointerY = 0;
+
+      const canAnimate = () => shouldAnimate(visible, document.hidden, paused, reducedMotion.matches, !destroyed, suspended);
+      const stop = () => {
+        if (frame !== null) cancelAnimationFrame(frame);
+        frame = null;
+        lastTime = null;
+      };
+      releases.push(stop);
+
+      function render(time: number) {
+        frame = null;
+        if (!canAnimate()) return;
+        const delta = lastTime === null ? 0 : Math.min(Math.max((time - lastTime) / 1000, 0), 0.1);
+        lastTime = time;
+        sculpture.rotation.y += delta * 0.32;
+        sculpture.rotation.x = nextRotation(sculpture.rotation.x, pointerY * 0.2, delta, 5);
+        sculpture.rotation.z = nextRotation(sculpture.rotation.z, pointerX * 0.15, delta, 5);
+        try {
+          renderer.render(scene, camera);
+          if (canAnimate()) frame = requestAnimationFrame(render);
+        } catch {
+          cleanup();
+        }
+      }
+
+      sync = () => {
+        pauseButton.disabled = reducedMotion.matches;
+        pauseButton.setAttribute('aria-pressed', String(paused || reducedMotion.matches));
+        pauseButton.textContent = reducedMotion.matches ? 'Animasi dinonaktifkan' : paused ? 'Putar animasi' : 'Jeda animasi';
+        if (!canAnimate()) stop();
+        else if (frame === null) frame = requestAnimationFrame(render);
+      };
+
+      resize = () => {
+        if (destroyed || suspended) return;
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        if (!width || !height) return;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        renderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        try {
+          renderer.render(scene, camera);
+        } catch {
+          cleanup();
+        }
+      };
+
+      function onPointerMove(event: PointerEvent) {
+        if (!finePointer.matches || event.pointerType === 'touch' || !canAnimate()) return;
+        const bounds = container.getBoundingClientRect();
+        if (!bounds.width || !bounds.height) return;
+        pointerX = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
+        pointerY = Math.max(-1, Math.min(1, 1 - (event.clientY - bounds.top) / bounds.height * 2));
+      }
+      function resetPointer() {
+        pointerX = 0;
+        pointerY = 0;
+      }
+      function onPause() {
+        paused = !paused;
+        sync();
+      }
+      function onMotionChange() {
+        resetPointer();
+        sync();
+      }
+
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        sync();
+      });
+      releases.push(() => observer.disconnect());
+      const resizeObserver = new ResizeObserver(resize);
+      releases.push(() => resizeObserver.disconnect());
+      observer.observe(container);
+      resizeObserver.observe(container);
+      container.addEventListener('pointermove', onPointerMove, { passive: true });
+      container.addEventListener('pointerleave', resetPointer);
+      pauseButton.addEventListener('click', onPause);
+      reducedMotion.addEventListener('change', onMotionChange);
+      finePointer.addEventListener('change', resetPointer);
+      document.addEventListener('visibilitychange', sync);
+      releases.push(() => {
+        container.removeEventListener('pointermove', onPointerMove);
+        container.removeEventListener('pointerleave', resetPointer);
+        pauseButton.removeEventListener('click', onPause);
+        reducedMotion.removeEventListener('change', onMotionChange);
+        finePointer.removeEventListener('change', resetPointer);
+        document.removeEventListener('visibilitychange', sync);
+      });
+      resize();
+      if (destroyed) return;
+      fallback.hidden = true;
+      pauseButton.hidden = false;
+      sync();
+    } catch {
+      cleanup();
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-hero-scene]').forEach(mountScene);
+</script>
