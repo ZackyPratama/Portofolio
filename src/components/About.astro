@@ -1,117 +1,61 @@
 ---
-import { Image } from "astro:assets";
-import SectionTitle from "./SectionTitle.astro";
+import { Image } from 'astro:assets';
+import SectionTitle from './SectionTitle.astro';
 import fotoProfil from '../assets/img/AZZ09651.png';
 
 const stats = [
-  { value: "3+", label: "Tahun Pengalaman" },
-  { value: "20+", label: "Proyek Selesai" },
-  { value: "10+", label: "Klien Puas" },
+  { value: '3+', label: 'Tahun pengalaman' },
+  { value: '20+', label: 'Proyek selesai' },
+  { value: '10+', label: 'Klien puas' },
 ];
 
 const facts = [
-  {
-    title: "Bersih & Rapi",
-    description: "Kode terstruktur, konsisten, dan mudah dirawat.",
-  },
-  {
-    title: "Fokus Performa",
-    description: "Website cepat dan nyaman di semua perangkat.",
-  },
-  {
-    title: "Detail",
-    description: "Memperhatikan hal kecil yang membuat berbeda.",
-  },
+  { title: '01 / Bersih & rapi', description: 'Kode terstruktur, konsisten, dan mudah dirawat.' },
+  { title: '02 / Fokus performa', description: 'Website cepat dan nyaman di semua perangkat.' },
+  { title: '03 / Detail', description: 'Memperhatikan hal kecil yang membuat berbeda.' },
 ];
 ---
 
-<section id="about" class="relative px-6 py-24 sm:py-28">
+<section id="about" class="relative overflow-hidden border-b-[3px] border-black px-6 py-24 dark:border-[#f7f4ef] sm:py-32">
   <div class="mx-auto max-w-6xl">
-    <SectionTitle
-      eyebrow="Tentang"
-      title="Tentang Saya"
-      description="Sedikit cerita tentang siapa saya dan apa yang saya kerjakan."
-    />
+    <SectionTitle eyebrow="01 / Tentang" title="Kode dengan alasan." description="Sedikit cerita tentang siapa saya dan apa yang saya kerjakan." />
 
-    <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,340px)_1fr]">
-      <div class="reveal mx-auto w-full max-w-xs">
-        <div
-          class="relative aspect-square rounded-[2rem] bg-gradient-to-br from-accent to-accent-alt p-1 shadow-xl shadow-accent/20"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center overflow-hidden rounded-[1.8rem] bg-white dark:bg-slate-900"
-          >
-            <!-- <svg
-              class="h-32 w-32 text-accent/50"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.69-8 6v2h16v-2c0-3.31-3.58-6-8-6Z"
-              ></path>
-            </svg> -->
-
-            <Image
-              src={fotoProfil}
-              alt="Foto M. Zacky Pratama"
-              class="h-full w-full object-cover"
-            />
+    <div class="grid items-start gap-12 lg:grid-cols-[minmax(0,360px)_1fr]">
+      <div class="reveal">
+        <div class="border-[3px] border-black bg-[#800020] p-3 shadow-[8px_8px_0_#0a0a0a] dark:border-[#f7f4ef] dark:shadow-[8px_8px_0_#800020]">
+          <div class="aspect-square overflow-hidden border-[3px] border-black bg-white dark:border-[#f7f4ef]">
+            <Image src={fotoProfil} alt="Foto M. Zacky Pratama" class="h-full w-full object-cover" />
           </div>
+          <p class="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-white">M. Zacky Pratama / developer</p>
         </div>
       </div>
 
       <div class="reveal">
-        <p
-          class="text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400"
-        >
-          Sebagai seorang fresh graduate Teknik Informatika yang memulai
-          perjalanan dari sekolah kejuruan (SMK), saya selalu memiliki
-          antusiasme tinggi terhadap bagaimana sebuah baris kode dapat
-          memecahkan masalah nyata.
+        <p class="max-w-2xl text-lg leading-relaxed text-slate-700 dark:text-slate-300 sm:text-xl">
+          Sebagai seorang fresh graduate Teknik Informatika yang memulai perjalanan dari sekolah kejuruan (SMK), saya selalu memiliki antusiasme tinggi terhadap bagaimana sebuah baris kode dapat memecahkan masalah nyata.
         </p>
-        <p
-          class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400"
-        >
-          Saya memiliki ketertarikan khusus pada eksplorasi creative web
-          development dan animasi interaktif. Pengalaman saya cukup beragam,
-          mulai dari merancang sistem dashboard pemantauan aktivasi JMO saat
-          kerja praktik di BPJS Ketenagakerjaan, hingga mengembangkan aplikasi
-          chat real-time selama magang di puplas.com. Di luar coding, saya juga
-          pernah aktif sebagai Kepala Departemen di Himpunan Mahasiswa dikampus,
-          yang melatih saya dalam manajemen waktu dan komunikasi tim yang baik.
+        <p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
+          Saya memiliki ketertarikan khusus pada eksplorasi creative web development dan animasi interaktif. Pengalaman saya cukup beragam, mulai dari merancang sistem dashboard pemantauan aktivasi JMO saat kerja praktik di BPJS Ketenagakerjaan, hingga mengembangkan aplikasi chat real-time selama magang di puplas.com. Di luar coding, saya juga pernah aktif sebagai Kepala Departemen di Himpunan Mahasiswa dikampus, yang melatih saya dalam manajemen waktu dan komunikasi tim yang baik.
         </p>
 
-        <div class="mt-8 grid grid-cols-3 gap-4">
-          {
-            stats.map((stat) => (
-              <div class="glass-card rounded-card p-4 text-center">
-                <p class="font-heading text-2xl font-bold text-accent">
-                  {stat.value}
-                </p>
-                <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
-                  {stat.label}
-                </p>
-              </div>
-            ))
-          }
+        <div class="mt-10 grid grid-cols-3 border-y-[3px] border-black dark:border-[#f7f4ef]">
+          {stats.map((stat) => (
+            <div class="border-r-[3px] border-black px-3 py-5 last:border-r-0 dark:border-[#f7f4ef]">
+              <p class="font-heading text-3xl font-bold text-[#800020] sm:text-4xl">{stat.value}</p>
+              <p class="mt-1 text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-slate-400">{stat.label}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
 
-    <div class="mt-14 grid gap-4 sm:grid-cols-3">
-      {
-        facts.map((fact) => (
-          <div class="reveal glass-card rounded-card p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/10">
-            <h3 class="font-heading text-lg font-semibold text-slate-900 dark:text-white">
-              {fact.title}
-            </h3>
-            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              {fact.description}
-            </p>
-          </div>
-        ))
-      }
+    <div class="mt-16 grid gap-4 sm:grid-cols-3">
+      {facts.map((fact) => (
+        <article class="reveal border-[3px] border-black bg-white p-6 transition duration-150 hover:-translate-y-1 hover:shadow-[6px_6px_0_#800020] dark:border-[#f7f4ef] dark:bg-black">
+          <h3 class="font-heading text-xl font-bold text-black dark:text-white">{fact.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{fact.description}</p>
+        </article>
+      ))}
     </div>
   </div>
 </section>
