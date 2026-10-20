@@ -88,9 +88,6 @@
     box-shadow: 8px 8px 0 #800020;
   }
 
-  .glow {
-    box-shadow: 6px 6px 0 #0a0a0a;
-  }
 }
 
 @layer utilities {

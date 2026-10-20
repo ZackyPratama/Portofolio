@@ -39,11 +39,11 @@ const {
     <script is:inline>
       (function () {
         try {
-          var stored = localStorage.getItem('theme');
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var theme = stored || (prefersDark ? 'dark' : 'light');
+          const stored = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = stored || (prefersDark ? 'dark' : 'light');
           if (theme === 'dark') document.documentElement.classList.add('dark');
-        } catch (e) {}
+        } catch {}
       })();
     </script>
   </head>
@@ -59,7 +59,7 @@ const {
     <script is:inline>
       (function () {
         document.documentElement.classList.add('js-motion');
-        var reveal = document.querySelectorAll('.reveal');
+        const reveal = document.querySelectorAll('.reveal');
         if (!reveal.length) return;
 
         if (!('IntersectionObserver' in window)) {
@@ -69,7 +69,7 @@ const {
           return;
         }
 
-        var observer = new IntersectionObserver(
+        const observer = new IntersectionObserver(
           function (entries) {
             entries.forEach(function (entry) {
               if (entry.isIntersecting) {

@@ -10,6 +10,8 @@ const links = [
 ];
 ---
 
+<noscript><style>[data-navbar]{position:static}[data-menu-toggle]{display:none!important}[data-menu]{display:block!important}</style></noscript>
+
 <header data-navbar class="fixed inset-x-0 top-0 z-50 border-b-[3px] border-black bg-[#f7f4ef] px-4 py-3 dark:border-[#f7f4ef] dark:bg-black">
   <nav
     class="mx-auto flex max-w-6xl items-center justify-between gap-4 bg-transparent px-0 py-1"
@@ -65,7 +67,7 @@ const links = [
   <div
     id="mobile-menu"
     data-menu
-     class="mx-auto mt-3 hidden max-w-6xl border-[3px] border-black bg-white p-2 shadow-[6px_6px_0_#0a0a0a] md:hidden dark:border-[#f7f4ef] dark:bg-black dark:shadow-[6px_6px_0_#f7f4ef]"
+     class="mx-auto mt-3 max-w-6xl border-[3px] border-black bg-white p-2 shadow-[6px_6px_0_#0a0a0a] md:hidden dark:border-[#f7f4ef] dark:bg-black dark:shadow-[6px_6px_0_#f7f4ef]"
   >
     <ul class="flex flex-col">
       {
@@ -86,34 +88,34 @@ const links = [
 
 <script is:inline>
   (function () {
-    var toggle = document.querySelector('[data-menu-toggle]');
-    var menu = document.querySelector('[data-menu]');
-    var navbar = document.querySelector('[data-navbar] nav');
+    const toggle = document.querySelector('[data-menu-toggle]');
+    const menu = document.querySelector('[data-menu]');
 
     if (toggle && menu) {
+      menu.classList.add('hidden');
       toggle.addEventListener('click', function () {
-        var isHidden = menu.classList.toggle('hidden');
+        const isHidden = menu.classList.toggle('hidden');
         toggle.setAttribute('aria-expanded', String(!isHidden));
+        toggle.setAttribute('aria-label', isHidden ? 'Buka menu navigasi' : 'Tutup menu navigasi');
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Buka menu navigasi');
+          toggle.focus();
+        }
       });
 
       menu.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', function () {
           menu.classList.add('hidden');
           toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Buka menu navigasi');
         });
       });
     }
 
-    if (navbar) {
-      var onScroll = function () {
-        if (window.scrollY > 8) {
-          navbar.classList.add('shadow-md', 'shadow-slate-900/5');
-        } else {
-          navbar.classList.remove('shadow-md', 'shadow-slate-900/5');
-        }
-      };
-      onScroll();
-      window.addEventListener('scroll', onScroll, { passive: true });
-    }
   })();
 </script>

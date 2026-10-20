@@ -1,7 +1,7 @@
 <div data-project-scene class="project-preview">
   <div data-project-fallback class="shapes" aria-hidden="true"><span></span><span></span></div>
   <div data-project-canvas class="canvas" aria-hidden="true"></div>
-  <p class="caption">Ilustrasi geometris — bukan screenshot</p>
+  <p id="project-preview-caption" class="caption">Ilustrasi geometris — bukan screenshot</p>
   <button type="button" data-project-pause hidden aria-pressed="false">Jeda animasi proyek</button>
 </div>
 
@@ -19,10 +19,11 @@
   import { shouldAnimate, projectPreviewActive } from '../lib/sceneLifecycle.js';
 
   async function mount(container: HTMLElement) {
-    const section = container.closest('section')!;
-    const host = container.querySelector<HTMLElement>('[data-project-canvas]')!;
-    const fallback = container.querySelector<HTMLElement>('[data-project-fallback]')!;
-    const button = container.querySelector<HTMLButtonElement>('button')!;
+    const section = container.closest('section');
+    const host = container.querySelector<HTMLElement>('[data-project-canvas]');
+    const fallback = container.querySelector<HTMLElement>('[data-project-fallback]');
+    const button = container.querySelector<HTMLButtonElement>('[data-project-pause]');
+    if (!section || !host || !fallback || !button) return;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const desktop = matchMedia('(min-width: 640px) and (pointer: fine)');
     const releases: (() => void)[] = [];
@@ -81,7 +82,7 @@
       const shape = new THREE.Mesh(geometry, material);
       scene.add(shape);
       const canAnimate = () => shouldAnimate(visible, document.hidden, paused, motion.matches,
-        !destroyed && projectPreviewActive(hovered !== null, focused !== null, desktop.matches), suspended);
+        !destroyed && desktop.matches && projectPreviewActive(hovered !== null, focused !== null, desktop.matches), suspended);
       function render(time: number) {
         frame = null;
         if (!canAnimate()) return;
@@ -89,8 +90,10 @@
         lastTime = time;
         shape.rotation.y += delta * 0.3;
         shape.rotation.x += delta * 0.12;
-        try { renderer.render(scene, camera); frame = requestAnimationFrame(render); }
-        catch { cleanup(); }
+        try {
+          renderer.render(scene, camera);
+          if (canAnimate()) frame = requestAnimationFrame(render);
+        } catch { cleanup(); }
       }
       sync = () => {
         if (destroyed) return;

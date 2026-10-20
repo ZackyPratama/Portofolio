@@ -3,7 +3,7 @@ export function shouldAnimate(visible, hidden, paused, reduced = false, ready = 
 }
 
 export function projectPreviewActive(hovered, focused, finePointer) {
-  return finePointer && (hovered || focused);
+  return focused || (finePointer && hovered);
 }
 
 export function nextRotation(current, target, delta, smoothing) {

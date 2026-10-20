@@ -9,21 +9,16 @@ const projects = [
     tags: ['Laravel', 'Tailwind', 'Midtrans'],
     repo: 'https://github.com/ZackyPratama/E-Commerce-PT-GMU',
   },
-  { title: 'Nama Proyek Dua', description: 'Deskripsi singkat proyek placeholder. Jelaskan masalah, solusi, dan hasilnya.', tags: ['React', 'Node.js', 'MySQL'] },
-  { title: 'Nama Proyek Tiga', description: 'Deskripsi singkat proyek placeholder. Jelaskan masalah, solusi, dan hasilnya.', tags: ['Next.js', 'Prisma', 'PostgreSQL'] },
-  { title: 'Nama Proyek Empat', description: 'Deskripsi singkat proyek placeholder. Jelaskan masalah, solusi, dan hasilnya.', tags: ['Vue', 'Vite', 'Tailwind'] },
-  { title: 'Nama Proyek Lima', description: 'Deskripsi singkat proyek placeholder. Jelaskan masalah, solusi, dan hasilnya.', tags: ['Express', 'MongoDB', 'JWT'] },
-  { title: 'Nama Proyek Enam', description: 'Deskripsi singkat proyek placeholder. Jelaskan masalah, solusi, dan hasilnya.', tags: ['Figma', 'UI/UX', 'Prototype'] },
 ];
 ---
 
 <section id="projects" class="bg-[#F7F4EF] px-6 py-24 text-[#0A0A0A] dark:bg-[#0A0A0A] dark:text-[#F7F4EF] sm:py-28">
   <div class="mx-auto max-w-6xl">
-    <SectionTitle eyebrow="04 / Proyek" title="Proyek terpilih" description="Beberapa proyek yang pernah saya kerjakan." />
+    <SectionTitle eyebrow="03 / Proyek" title="Proyek terpilih" description="Beberapa proyek yang pernah saya kerjakan." />
     <div class="mb-8"><ProjectsScene /></div>
     <div class="grid gap-8 lg:grid-cols-[1.35fr_1fr]">
       {projects.map((project, index) => (
-        <article data-project-card data-project={project.title} tabindex="0" class:list={["reveal flex flex-col border-[3px] border-[#0A0A0A] bg-white shadow-[8px_8px_0_#0A0A0A] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#800020] dark:border-[#F7F4EF] dark:bg-[#800020] dark:shadow-[8px_8px_0_#F7F4EF]", index === 0 ? 'lg:row-span-2' : '']}>
+        <article data-project-card data-project={project.title} aria-describedby="project-preview-caption" tabindex="0" class:list={["reveal flex flex-col border-[3px] border-[#0A0A0A] bg-white shadow-[8px_8px_0_#0A0A0A] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#800020] dark:border-[#F7F4EF] dark:bg-[#800020] dark:shadow-[8px_8px_0_#F7F4EF]", index === 0 ? 'lg:row-span-2' : '']}>
           <div class="flex flex-1 flex-col p-6">
             <p class="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#800020] dark:text-[#F7F4EF]">{index === 0 ? 'Proyek unggulan' : 'Proyek'}</p>
             <h3 class="font-heading text-2xl font-bold leading-tight">{project.title}</h3>

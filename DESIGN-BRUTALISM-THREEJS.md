@@ -4,7 +4,7 @@
 
 Mengubah total visual portofolio menjadi berani, kreatif, dan khas melalui tipografi besar, komposisi asimetris, kontras kuat, serta interaksi 3D yang terarah. Konten tetap mudah dibaca dan navigasi tetap sederhana.
 
-Dokumen ini merupakan acuan implementasi, bukan laporan fitur yang sudah selesai.
+Dokumen ini menjadi acuan implementasi dan checklist status; verifikasi browser masih pending jika belum ditandai selesai.
 
 ### Keputusan pengguna
 
@@ -255,8 +255,10 @@ Redesign selesai ketika seluruh section memakai bahasa visual baru, Three.js Her
 - [x] Sculpture abstrak dipilih.
 - [x] Three.js untuk Hero dan Projects dipilih.
 - [x] Dokumen acuan dibuat.
-- [ ] Fondasi visual dan responsive diterapkan.
-- [ ] Semua section didesain ulang.
-- [ ] Three.js Hero dan Projects diterapkan.
-- [ ] Fallback, reduced motion, pause, dan cleanup diverifikasi.
-- [ ] Build dan pemeriksaan browser selesai.
+- [x] Fondasi visual, responsive, fokus, dan status no-JavaScript diterapkan.
+- [x] Semua section didesain ulang dengan konten personal dipertahankan.
+- [x] Three.js Hero dan Projects diterapkan dengan fallback.
+- [x] Lifecycle, reduced motion, pause, cleanup, dan Projects coarse-focus gate ditinjau lewat test/build.
+- [x] Build dan test runnable berhasil.
+- [ ] Pemeriksaan browser aktual, console, responsive, kontras visual, keyboard, reduced motion, no-JavaScript, WebGL fallback, dan performa masih pending; tooling browser lokal tidak ditemukan.
+- [ ] Lint/typecheck masih pending; package scripts tidak menyediakan command tersebut.

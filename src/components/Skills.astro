@@ -2,16 +2,16 @@
 import SectionTitle from './SectionTitle.astro';
 
 const skills = [
-  { name: 'HTML & CSS', short: 'HTML & CSS' },
-  { name: 'PHP', short: 'PHP' },
-  { name: 'JavaScript', short: 'JavaScript' },
-  { name: 'React', short: 'React' },
-  { name: 'Astro', short: 'Astro' },
-  { name: 'Node.js', short: 'Node.js' },
-  { name: 'Tailwind CSS', short: 'Tailwind CSS' },
-  { name: 'Git', short: 'Git' },
-  { name: 'Figma', short: 'Figma' },
-  { name: 'MySQL', short: 'MySQL' },
+  { name: 'HTML & CSS' },
+  { name: 'PHP' },
+  { name: 'JavaScript' },
+  { name: 'React' },
+  { name: 'Astro' },
+  { name: 'Node.js' },
+  { name: 'Tailwind CSS' },
+  { name: 'Git' },
+  { name: 'Figma' },
+  { name: 'MySQL' },
 ];
 ---
 
@@ -22,8 +22,7 @@ const skills = [
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {skills.map((skill) => (
         <div class="reveal border-[3px] border-black bg-white p-6 font-heading text-sm font-bold text-white transition duration-150 hover:-translate-y-1 hover:shadow-[6px_6px_0_#800020] dark:border-[#f7f4ef] dark:bg-black">
-          <p class="text-lg text-[#800020]">{skill.short}</p>
-          <p class="mt-2 text-xs font-medium uppercase tracking-wide text-slate-400">{skill.name}</p>
+          <p class="text-lg text-black dark:text-white">{skill.name}</p>
         </div>
       ))}
     </div>
