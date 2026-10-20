@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import SectionTitle from "./SectionTitle.astro";
+import fotoProfil from '../assets/img/AZZ09651.png';
 
 const stats = [
   { value: "3+", label: "Tahun Pengalaman" },
@@ -50,8 +52,8 @@ const facts = [
               ></path>
             </svg> -->
 
-            <img
-              src="img/photos.png"
+            <Image
+              src={fotoProfil}
               alt="Foto M. Zacky Pratama"
               class="h-full w-full object-cover"
             />
