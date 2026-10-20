@@ -1,24 +1,24 @@
 ---
-import SectionTitle from './SectionTitle.astro';
+import SectionTitle from "./SectionTitle.astro";
 
 const stats = [
-  { value: '3+', label: 'Tahun Pengalaman' },
-  { value: '20+', label: 'Proyek Selesai' },
-  { value: '10+', label: 'Klien Puas' },
+  { value: "3+", label: "Tahun Pengalaman" },
+  { value: "20+", label: "Proyek Selesai" },
+  { value: "10+", label: "Klien Puas" },
 ];
 
 const facts = [
   {
-    title: 'Bersih & Rapi',
-    description: 'Kode terstruktur, konsisten, dan mudah dirawat.',
+    title: "Bersih & Rapi",
+    description: "Kode terstruktur, konsisten, dan mudah dirawat.",
   },
   {
-    title: 'Fokus Performa',
-    description: 'Website cepat dan nyaman di semua perangkat.',
+    title: "Fokus Performa",
+    description: "Website cepat dan nyaman di semua perangkat.",
   },
   {
-    title: 'Detail',
-    description: 'Memperhatikan hal kecil yang membuat berbeda.',
+    title: "Detail",
+    description: "Memperhatikan hal kecil yang membuat berbeda.",
   },
 ];
 ---
@@ -39,7 +39,7 @@ const facts = [
           <div
             class="flex h-full w-full items-center justify-center overflow-hidden rounded-[1.8rem] bg-white dark:bg-slate-900"
           >
-            <svg
+            <!-- <svg
               class="h-32 w-32 text-accent/50"
               viewBox="0 0 24 24"
               fill="currentColor"
@@ -48,20 +48,36 @@ const facts = [
               <path
                 d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.69-8 6v2h16v-2c0-3.31-3.58-6-8-6Z"
               ></path>
-            </svg>
+            </svg> -->
+
+            <img
+              src="img/photos.png"
+              alt="Foto M. Zacky Pratama"
+              class="h-full w-full object-cover"
+            />
           </div>
         </div>
       </div>
 
       <div class="reveal">
-        <p class="text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
-          Ini adalah paragraf bio placeholder. Saya seorang pengembang yang
-          senang membangun produk digital dari konsep hingga rilis, dengan
-          perhatian pada kualitas dan pengalaman pengguna.
+        <p
+          class="text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400"
+        >
+          Sebagai seorang fresh graduate Teknik Informatika yang memulai
+          perjalanan dari sekolah kejuruan (SMK), saya selalu memiliki
+          antusiasme tinggi terhadap bagaimana sebuah baris kode dapat
+          memecahkan masalah nyata.
         </p>
-        <p class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
-          Sehari-hari saya bekerja dengan teknologi web modern. Ganti teks ini
-          dengan cerita Anda sendiri.
+        <p
+          class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400"
+        >
+          Saya memiliki ketertarikan khusus pada eksplorasi creative web
+          development dan animasi interaktif. Pengalaman saya cukup beragam,
+          mulai dari merancang sistem dashboard pemantauan aktivasi JMO saat
+          kerja praktik di BPJS Ketenagakerjaan, hingga mengembangkan aplikasi
+          chat real-time selama magang di puplas.com. Di luar coding, saya juga
+          pernah aktif sebagai Kepala Departemen di Himpunan Mahasiswa dikampus,
+          yang melatih saya dalam manajemen waktu dan komunikasi tim yang baik.
         </p>
 
         <div class="mt-8 grid grid-cols-3 gap-4">
