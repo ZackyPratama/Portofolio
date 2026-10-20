@@ -1,0 +1,149 @@
+<div data-project-scene class="project-preview">
+  <div data-project-fallback class="shapes" aria-hidden="true"><span></span><span></span></div>
+  <div data-project-canvas class="canvas" aria-hidden="true"></div>
+  <p class="caption">Ilustrasi geometris — bukan screenshot</p>
+  <button type="button" data-project-pause hidden aria-pressed="false">Jeda animasi proyek</button>
+</div>
+
+<style>
+  .project-preview { position: relative; min-height: 18rem; overflow: hidden; border: 3px solid #0A0A0A; background: #800020; color: white; }
+  .canvas, .shapes { position: absolute; inset: 0; pointer-events: none; }
+  .shapes span { position: absolute; left: 25%; top: 25%; width: 6rem; height: 6rem; border: 3px solid white; background: #0A0A0A; transform: rotate(3deg); }
+  .shapes span + span { left: 60%; top: 45%; width: 4rem; height: 4rem; border-radius: 50%; background: #F7F4EF; }
+  .caption { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; font-size: .75rem; font-weight: 700; }
+  button { position: absolute; right: 1rem; top: 1rem; border: 3px solid #0A0A0A; padding: .75rem; background: white; color: #0A0A0A; font-weight: 700; }
+  button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+</style>
+
+<script>
+  import { shouldAnimate, projectPreviewActive } from '../lib/sceneLifecycle.js';
+
+  async function mount(container: HTMLElement) {
+    const section = container.closest('section')!;
+    const host = container.querySelector<HTMLElement>('[data-project-canvas]')!;
+    const fallback = container.querySelector<HTMLElement>('[data-project-fallback]')!;
+    const button = container.querySelector<HTMLButtonElement>('button')!;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const desktop = matchMedia('(min-width: 640px) and (pointer: fine)');
+    const releases: (() => void)[] = [];
+    let destroyed = false;
+    let suspended = false;
+    let visible = false;
+    let paused = false;
+    let hovered: Element | null = null;
+    let focused: Element | null = null;
+    let frame: number | null = null;
+    let lastTime: number | null = null;
+    let sync = () => {};
+    let resize = () => {};
+    const stop = () => {
+      if (frame !== null) cancelAnimationFrame(frame);
+      frame = null;
+      lastTime = null;
+    };
+    function cleanup() {
+      if (destroyed) return;
+      destroyed = true;
+      stop();
+      for (const release of releases.reverse()) release();
+      fallback.hidden = false;
+      button.hidden = true;
+    }
+    function listen(target: EventTarget, type: string, listener: EventListener) {
+      target.addEventListener(type, listener);
+      releases.push(() => target.removeEventListener(type, listener));
+    }
+    listen(window, 'pagehide', ((event: PageTransitionEvent) => {
+      if (!event.persisted) cleanup();
+      else { suspended = true; hovered = null; sync(); }
+    }) as EventListener);
+    listen(window, 'pageshow', () => { suspended = false; resize(); sync(); });
+
+    try {
+      const THREE = await import('three');
+      if (destroyed) return;
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      releases.push(() => { renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); });
+      renderer.domElement.setAttribute('aria-hidden', 'true');
+      renderer.domElement.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none';
+      host.append(renderer.domElement);
+      listen(renderer.domElement, 'webglcontextlost', (event) => { event.preventDefault(); cleanup(); });
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+      camera.position.z = 7;
+      const light = new THREE.DirectionalLight(0xffffff, 3);
+      light.position.set(3, 4, 5);
+      scene.add(light, new THREE.AmbientLight(0xffffff, 1.4));
+      const geometry = new THREE.OctahedronGeometry(1.25);
+      releases.push(() => geometry.dispose());
+      const material = new THREE.MeshStandardMaterial({ color: 0xf7f4ef, roughness: 0.5 });
+      releases.push(() => material.dispose());
+      const shape = new THREE.Mesh(geometry, material);
+      scene.add(shape);
+      const canAnimate = () => shouldAnimate(visible, document.hidden, paused, motion.matches,
+        !destroyed && projectPreviewActive(hovered !== null, focused !== null, desktop.matches), suspended);
+      function render(time: number) {
+        frame = null;
+        if (!canAnimate()) return;
+        const delta = lastTime === null ? 0 : Math.min(Math.max((time - lastTime) / 1000, 0), 0.1);
+        lastTime = time;
+        shape.rotation.y += delta * 0.3;
+        shape.rotation.x += delta * 0.12;
+        try { renderer.render(scene, camera); frame = requestAnimationFrame(render); }
+        catch { cleanup(); }
+      }
+      sync = () => {
+        if (destroyed) return;
+        const enabled = desktop.matches && !motion.matches;
+        host.hidden = !enabled;
+        fallback.hidden = enabled;
+        button.hidden = !enabled;
+        button.setAttribute('aria-pressed', String(paused));
+        button.textContent = paused ? 'Putar animasi proyek' : 'Jeda animasi proyek';
+        if (!canAnimate()) stop();
+        else if (frame === null) frame = requestAnimationFrame(render);
+      };
+      resize = () => {
+        if (destroyed || suspended) return;
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        if (!width || !height) return;
+        try {
+          renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
+          renderer.setSize(width, height, false);
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          if (!document.hidden && desktop.matches) renderer.render(scene, camera);
+        } catch { cleanup(); }
+      };
+      section.querySelectorAll<HTMLElement>('[data-project-card]').forEach((card, index) => {
+        const activate = () => { shape.rotation.z = index * 0.2; sync(); };
+        listen(card, 'pointerenter', ((event: PointerEvent) => {
+          if (event.pointerType === 'touch' || !desktop.matches) return;
+          hovered = card; activate();
+        }) as EventListener);
+        listen(card, 'pointerleave', () => { if (hovered === card) hovered = null; sync(); });
+        listen(card, 'focusin', () => { focused = card; activate(); });
+        listen(card, 'focusout', ((event: FocusEvent) => {
+          if (event.relatedTarget instanceof Node && card.contains(event.relatedTarget)) return;
+          if (focused === card) focused = null;
+          sync();
+        }) as EventListener);
+      });
+      listen(button, 'click', () => { paused = !paused; sync(); });
+      listen(motion, 'change', () => { sync(); resize(); });
+      listen(desktop, 'change', () => { hovered = null; sync(); resize(); });
+      listen(document, 'visibilitychange', () => { if (document.hidden) hovered = null; sync(); });
+      const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); });
+      releases.push(() => observer.disconnect());
+      observer.observe(section);
+      const sizing = new ResizeObserver(resize);
+      releases.push(() => sizing.disconnect());
+      sizing.observe(container);
+      focused = section.querySelector('[data-project-card]:focus-within');
+      resize();
+      sync();
+    } catch { cleanup(); }
+  }
+  document.querySelectorAll<HTMLElement>('[data-project-scene]').forEach(mount);
+</script>
